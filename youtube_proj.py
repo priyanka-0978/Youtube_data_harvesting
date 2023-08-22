@@ -227,7 +227,7 @@ mydb = mysql.connector.connect(
   host="localhost",
   port=3306,
   user="root",
-  password="Priya1234",
+  password="user_password",
 auth_plugin='mysql_native_password',
   database ='youtube_db'
 )
@@ -238,7 +238,7 @@ mycursor=mydb.cursor()
 
 #Creating an engine to export data easily
 
-my_conn=create_engine("mysql+mysqldb://root:Priya1234@localhost/youtube_db")
+my_conn=create_engine("mysql+mysqldb://root:user_password@localhost/youtube_db")
 
 if submit1:
     
@@ -289,7 +289,7 @@ Check_channel = st.checkbox('**Check available channel data for analysis**')
 
 if Check_channel:
    # Create database connection
-    engine = create_engine("mysql+mysqldb://root:Priya1234@localhost/youtube_db")
+    engine = create_engine("mysql+mysqldb://root:user_password@localhost/youtube_db")
 
     # Execute SQL query to retrieve channel names
 
