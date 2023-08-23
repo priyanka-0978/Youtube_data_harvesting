@@ -341,15 +341,7 @@ elif questions == '2. Which channels have the most number of videos, and how man
                         ORDER BY total_videos DESC""")
     df = pd.DataFrame(mycursor.fetchall(),columns=mycursor.column_names)
     st.write(df)
-    st.bar_chart(df,x= mycursor.column_names[0],y= mycursor.column_names[1])
-    fig = px.bar(df,
-                 x=mycursor.column_names[0],
-                 y=mycursor.column_names[1],
-                 orientation='v',
-                 color=mycursor.column_names[0]
-                )
-    st.plotly_chart(fig,use_container_width=True)
-
+    
 elif questions == '3. What are the top 10 most viewed videos and their respective channels?':
     mycursor.execute("""SELECT channel_name AS Channel_Name, title AS Video_Title, views AS Views 
                         FROM videos
@@ -367,15 +359,19 @@ elif questions == '3. What are the top 10 most viewed videos and their respectiv
     st.plotly_chart(fig,use_container_width=True)
 
 elif questions == '4. How many comments were made on each video, and what are their corresponding video names?':
-    mycursor.execute("""SELECT a.video_id AS Video_id, a.title AS Video_Title, b.Total_Comments
-                        FROM videos AS a
-                        LEFT JOIN (SELECT video_id,COUNT(comment_id) AS Total_Comments
-                        FROM comments GROUP BY video_id) AS b
-                        ON a.video_id = b.video_id
-                        ORDER BY b.Total_Comments DESC""")
+    mycursor.execute("""SELECT title AS Video_Name, comments AS Total_Comments
+                        FROM videos 
+                        ORDER BY comments DESC""")
     df = pd.DataFrame(mycursor.fetchall(),columns=mycursor.column_names)
     st.write(df)
-
+    st.write(":green[Total Number of Comments made on each Video:]")
+    fig = px.bar(df,
+                 x=mycursor.column_names[1],
+                 y=mycursor.column_names[0],
+                 orientation='h'
+                )
+    st.plotly_chart(fig,use_container_width=True)
+  
 elif questions == '5. Which videos have the highest number of likes, and what are their corresponding channel names?':
     mycursor.execute("""SELECT channel_name AS Channel_Name,title AS Title,likes AS Likes_Count 
                         FROM videos
