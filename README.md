@@ -1,3 +1,5 @@
+Introduction:
+
 YouTube Data Harvesting and Warehousing is a project that intends to provide users with the ability to access and analyse data from numerous YouTube channels. SQL, MongoDB, and Streamlit are used in the project to develop a user-friendly application that allows users to retrieve, save, and query YouTube channel,video and comment data.
 
 TOOLS AND LIBRARIES USED:
@@ -24,6 +26,7 @@ MongoDB Atlas is a comprehensive cloud-based database service designed specifica
 MySQL:
 
 MySQL is a relational database management system based on SQL – Structured Query Language. The application is used for a wide range of purposes, including data warehousing, e-commerce, and logging applications.It provides a platform for storing and managing structured data, offering support for various data types and advanced SQL capabilities.
+
 REQUIRED LIBRARIES:
 
 1.googleapiclient.discovery
@@ -68,5 +71,11 @@ The following functions are available in the YouTube Data Harvesting and Warehou
 
 3. Migration of data from the data lake to a SQL database 
 
-4.Querying the SQL data warehouse
+4.Leveraging SQL to query the data warehouse.
+
+5.Creating graphs and charts using streamlit data visualisation tool to make it simpler for users to interpret the data.
+
+
+LinkedIn Profile: https://www.linkedin.com/posts/priyanka-pal-303367224_greetings-to-all-im-priyanka-and-id-like-activity-7100163774791188481-Npm0?utm_source=share&utm_medium=member_desktop
+
 
