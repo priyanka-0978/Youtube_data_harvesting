@@ -58,22 +58,19 @@ Transferring the collected data from multiple channels namely the channels,video
 Utilise SQL queries to join tables within the SQL data warehouse and retrieve
 specific channel data based on user input
             
-
-
-
 FEATURES:
 
 The following functions are available in the YouTube Data Harvesting and Warehousing application:
 
-1. Retrieval of channel ,video and  comment data from YouTube using the YouTube API.
+Retrieval of channel ,video and  comment data from YouTube using the YouTube API.
 
-2. Storage of data in a MongoDB database as a data lake.
+Storage of data in a MongoDB database as a data lake.
 
-3. Migration of data from the data lake to a SQL database 
+Migration of data from the data lake to a SQL database
 
-4.Leveraging SQL to query the data warehouse.
+Leveraging SQL to query the data warehouse.
 
-5.Creating graphs and charts using streamlit data visualisation tool to make it simpler for users to interpret the data.
+Creating graphs and charts using streamlit data visualisation tool to make it simpler for users to interpret the data.
 
 
 LinkedIn Profile: https://www.linkedin.com/posts/priyanka-pal-303367224_greetings-to-all-im-priyanka-and-id-like-activity-7100163774791188481-Npm0?utm_source=share&utm_medium=member_desktop
