@@ -228,13 +228,19 @@ mydb = mysql.connector.connect(
   port=3306,
   user="root",
   password="user_password",
-auth_plugin='mysql_native_password',
-  database ='youtube_db'
+auth_plugin='mysql_native_password'
 )
-
 mycursor=mydb.cursor()
 
+mycursor.execute('CREATE DATABASE IF NOT EXISTS youtube_db')
 
+mycursor.execute("use youtube_db")
+
+mycursor.execute("CREATE TABLE IF NOT EXISTS channels(channel_id varchar(255) Primary Key not null,channel_name varchar(255),subscribers int,view_count int,total_videos int,playlist_id varchar(255),description text)")
+
+mycursor.execute("CREATE TABLE IF NOT EXISTS videos(channel_name varchar(255),channel_id varchar(255),video_id varchar(255) Primary Key,title varchar(255),description text,published_date varchar(255),views int,likes int,favourite_counts int,comments int,duration varchar(255),thumbnail varchar(255),caption_status varchar(255),FOREIGN KEY (channel_id) REFERENCES channels (channel_id))")
+
+mycursor.execute("CREATE TABLE IF NOT EXISTS comments(comment_id varchar(255) Primary key,video_id varchar(255),comment_text text,comment_author varchar(255),comment_published_date varchar(255))")
 
 #Creating an engine to export data easily
 
@@ -247,8 +253,7 @@ if submit1:
     channel_df=pd.DataFrame(channel_stats)
 
     playlist_data=get_playlist_id(channel_df)
-
-
+  
     video_ids=get_video_ids(youtube,playlist_data)
 
     video_data=get_video_details(youtube,video_ids)
@@ -258,19 +263,21 @@ if submit1:
     comment_data=get_comments(youtube,video_ids)
 
     comment_df=pd.DataFrame(get_comments(youtube,video_ids))
-
-    mycursor.execute('CREATE DATABASE IF NOT EXISTS youtube_db')
-    mycursor.execute("use youtube_db")
-    mycursor.execute("CREATE TABLE IF NOT EXISTS channels(channel_id varchar(255) Primary Key not null,channel_name varchar(255),subscribers int,view_count int,total_videos int,playlist_id varchar(255),description text)")
-
-    mycursor.execute("CREATE TABLE IF NOT EXISTS videos(channel_name varchar(255),channel_id varchar(255),video_id varchar(255) Primary Key,title varchar(255),description text,published_date varchar(255),views int,likes int,favourite_counts int,comments int,duration varchar(255),thumbnail varchar(255),caption_status varchar(255),FOREIGN KEY (channel_id) REFERENCES channels (channel_id))")
-
-    mycursor.execute("CREATE TABLE IF NOT EXISTS comments(comment_id varchar(255) Primary key,video_id varchar(255),comment_text text,comment_author varchar(255),comment_published_date varchar(255))")
-
-    channel_df.to_sql(con=my_conn,name="channels",if_exists="append",index=False)
-    video_df.to_sql(con=my_conn,name="videos",if_exists="append",index=False)
-    comment_df.to_sql(con=my_conn,name="comments",if_exists="append",index=False)
-        
+  
+    try:
+        channel_df.to_sql(con=my_conn,name="channels",if_exists="append",index=False)
+    except:
+        print("Duplicate Entry Found")
+    try:
+        video_df.to_sql(con=my_conn,name="videos",if_exists="append",index=False)
+    except:
+        print("Duplicate Entry Found")
+       
+    try:
+        comment_df.to_sql(con=my_conn,name="comments",if_exists="append",index=False)
+    except:
+        print("Duplicate Entry Found")
+   
     progress_text = "Operation in progress. Please wait."
     my_bar = st.progress(0, text=progress_text)
 
@@ -282,7 +289,7 @@ if submit1:
 
     
 
-#---------------------------------------------------#
+#-------------------------------------------------------------------------------------#
 # Check available channel data
 
 Check_channel = st.checkbox('**Check available channel data for analysis**')
@@ -313,8 +320,6 @@ if Check_channel:
 st.subheader(':blue[Query the SQL data warehouse]')
 
 st.write("Choose any query to receive insights.")
-
-
 
 questions = st.selectbox('Questions',
     ['Click the question that you would like to query',
